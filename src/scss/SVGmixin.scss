@@ -1,0 +1,21 @@
+@import 'iconsData';
+
+@function uri-encode-color($color) {
+     @if (alpha($color) != 1) {
+          @return 'rgba%28' + round(red($color)) + '%2C' + round(green($color)) + '%2C' + round(blue($color)) + '%2C' + round(alpha($color)) + '%29';
+     } @else {
+          @return 'rgb%28' + round(red($color)) + '%2C' + round(green($color)) + '%2C' + round(blue($color)) + '%29';
+     }
+}
+
+@function sassvg($icon, $color: #000, $fillcolor: $color) {
+     $fillcolor: uri-encode-color($fillcolor);
+
+     $functionname: 'sassvg-' + $icon;
+
+     @if (type-of($icon) != 'string' or type-of($color) != 'color' or function-exists($functionname) == false) {
+          @warn "wrong parameter(s) for function 'sassvg'. The first one needs to be a string with the fileName of the svg (without extension)";
+     } @else {
+          @return unquote('url(' + call(get-function($functionname), $fillcolor) + ')');
+     }
+}
