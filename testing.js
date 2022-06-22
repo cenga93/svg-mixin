@@ -3,6 +3,7 @@ const { join } = require('path');
 const { promisify } = require('util');
 const asyncReadFile = promisify(readFile);
 
+
 (async () => {
      const pathToIcons = join(__dirname, 'src/icons');
      const dist = join(__dirname, 'src/scss/');
